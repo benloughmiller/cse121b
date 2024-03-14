@@ -40,7 +40,7 @@ const divide = (number1, number2) => number1 / number2;
 const divideNumbers = () => {
     let dividend = Number(document.querySelector('#dividend').value);
     let divisor = Number(document.querySelector('#divisor').value);
-    document.querySelector('#quotient').value = divide(dividend, divisor).toFixed(2);
+    document.querySelector('#quotient').value = divide(dividend, divisor).toFixed(1);
 };
 document.querySelector('#divideNumbers').addEventListener('click', divideNumbers);
 
@@ -56,7 +56,7 @@ document.querySelector('#getTotal').addEventListener('click', function() {
         let membershipDiscount = 0;
         total = subtotal
     }
-    document.querySelector('#total').textContent = `Total Due: $${total.toFixed(1)}`;
+    document.querySelector('#total').textContent = `Total Due: $${total.toFixed(2)}`;
   });
 
 /* ARRAY METHODS - Functional Programming */
