@@ -6,24 +6,41 @@
         const locationElement = document.getElementById('location');
         const tempElement = document.getElementById('temp');
         const descElement = document.getElementById('desc');
-        
-        searchButton.addEventListener('click', () => {
+        const weatherArray = [];
+
+        searchButton.addEventListener('click', async () => {
             const location = city.value;
             if (location) {
                 locationElement.textContent = '';
                 tempElement.textContent = '';
                 descElement.textContent = '';
-                fetchWeather(location);
+                await fetchWeather(location);
+                displayWeather();
             }
-        });
+            else {
+                locationElement.textContent = 'Please enter a city.';
+                tempElement.textContent = '';
+                descElement.textContent = '';
+            }
+        }); 
         
        const fetchWeather = async (location) => {
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=imperial`;
             const response = await fetch(url)
-            const data = await response.json();
-            const weatherList = data;
+            const weatherList = await response.json();
 
-            locationElement.textContent = weatherList.name;
-            tempElement.textContent = `${Math.round(weatherList.main.temp)}°F`;
-            descElement.textContent = weatherList.weather[0].description;
+            weatherArray.push({
+                location: weatherList.name,
+                temperature: `${Math.round(weatherList.main.temp)}°F`,
+                description: weatherList.weather[0].description
+            });
         }
+        const displayWeather = () => {
+            const weatherData = weatherArray[weatherArray.length - 1];
+            locationElement.textContent = weatherData.location;
+            tempElement.textContent = weatherData.temperature;
+            descElement.textContent = weatherData.description;
+        }
+
+    
+    
